@@ -1,6 +1,8 @@
 <x-layout>
-    <section style="background-color: darkolivegreen">
-        index.blade.php
+    <section>
+        <h2>
+            Hello
+        </h2>
 
     </section>
 </x-layout>
