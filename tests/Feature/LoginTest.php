@@ -69,7 +69,7 @@ class LoginTest extends TestCase
 
         $response->assertRedirect('/login');
         $response->assertSessionHasErrors('email');
-        var_dump(session()->getOldInput('password'));
+      
         $this->assertTrue(session()->hasOldInput('email'));
         $this->assertGuest();
     }

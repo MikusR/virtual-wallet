@@ -1,5 +1,5 @@
 <x-layout>
-    <section>
+    <section class="container">
         <h2>
             Hello
         </h2>

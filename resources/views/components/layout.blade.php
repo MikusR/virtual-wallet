@@ -7,7 +7,7 @@
 <header class="container">
     <nav>
         <ul>
-            <li><strong>Wallet</strong></li>
+            <li><a href="/"><strong>Wallet</strong></a></li>
         </ul>
         <ul>
             @guest
@@ -21,7 +21,7 @@
                         Logout
                     </a>
                     <form id="logout-form" action="/logout" method="POST" style="display: none;">
-                        {{ csrf_field() }}
+                        @csrf
                     </form>
                 </li>
 
@@ -31,15 +31,14 @@
 </header>
 <main>
 
-    <h1>layout.blade.php</h1>
-    <hr/>
+
     {{ $slot }}
 
     @if (session()->has('success'))
         <p>{{ session('success') }}</p>
     @endif
 </main>
-<footer>
+<footer class="container">
     Footer
 </footer>
 </body>
