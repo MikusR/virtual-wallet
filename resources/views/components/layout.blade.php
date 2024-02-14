@@ -1,7 +1,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <title>Welcome, {{ auth()->user()->name ?? 'Guest' }}</title>
-    <link rel="stylesheet" href="css/pico.css"/>
+    <link rel="stylesheet" href="/css/pico.css"/>
 </head>
 <body>
 <header class="container">
