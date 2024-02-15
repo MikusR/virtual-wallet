@@ -7,7 +7,12 @@
 <header class="container">
     <nav>
         <ul>
-            <li><a href="/"><strong>Wallet</strong></a></li>
+            @guest
+                <li><a href="/">Welcome</a></li>
+            @endguest
+            @auth
+                <li><a href="/wallets"><strong>Wallets</strong></a></li>
+            @endauth
         </ul>
         <ul>
             @guest

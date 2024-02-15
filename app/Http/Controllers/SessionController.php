@@ -20,7 +20,7 @@ class SessionController extends Controller
         if (auth()->attempt($attributes)) {
             session()->regenerate();
 
-            return redirect('/')->with('success', 'Welcome back');
+            return redirect('/wallets')->with('success', 'Welcome back');
         }
 
         return back()
