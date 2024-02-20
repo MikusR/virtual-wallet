@@ -12,8 +12,11 @@ class WalletController extends Controller
 {
     public function index()
     {
-        $wallets = Auth::user()->wallets()->latest()->get();
+        $wallets = Auth::user()->wallets()->withCount(['transactions'])->latest()->get();
 
+//        foreach ($wallets as $wallet) {
+//            $wallet->balance = $wallet->transactions()->sum('amount');
+//        }
 
         return view('wallets.index', ['wallets' => $wallets]);
     }
