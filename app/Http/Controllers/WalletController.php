@@ -21,12 +21,8 @@ class WalletController extends Controller
     public function show(string $id)
     {
         $wallet = Wallet::with('transactions')->findOrFail($id);
-        \
-            dd($wallet);
 
-
-//              return $id;
-        return view('wallets.show', ['wallet' => $wallet]);
+        return view('wallets.transactions', ['wallet' => $wallet]);
     }
 
     public function create()
