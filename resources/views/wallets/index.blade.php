@@ -6,6 +6,7 @@
             <tr>
                 <th scope="col">Name</th>
                 <th scope="col">Balance</th>
+                <th scope="col">Transaction Count</th>
             </tr>
             </thead>
             <tbody>
@@ -15,6 +16,7 @@
                 <tr>
                     <th scope="row"><a href="/wallets/{{ $wallet->id }}">{{ $wallet->name }}</a></th>
                     <td>{{ $wallet->balance }}</td>
+                    <td>{{ $wallet->transactions_count }}</td>
 
                 </tr>
 
