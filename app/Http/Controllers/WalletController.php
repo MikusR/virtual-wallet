@@ -12,10 +12,17 @@ class WalletController extends Controller
 {
     public function index()
     {
-        $wallets = Auth::user()->wallets()->get();
+        $wallets = Auth::user()->wallets()->latest()->get();
 
 
         return view('wallets.index', ['wallets' => $wallets]);
+    }
+
+    public function show(string $id)
+    {
+        $wallet = Wallet::with('transactions')->findOrFail($id);
+
+        return view('wallets.transactions', ['wallet' => $wallet]);
     }
 
     public function create()
