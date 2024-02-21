@@ -7,6 +7,7 @@
                 <th scope="col">Name</th>
                 <th scope="col">Balance</th>
                 <th scope="col">Transaction Count</th>
+                <th scope="col">Delete</th>
             </tr>
             </thead>
             <tbody>
@@ -17,6 +18,16 @@
                     <th scope="row"><a href="/wallets/{{ $wallet->id }}">{{ $wallet->name }}</a></th>
                     <td>{{ $wallet->balance }}</td>
                     <td>{{ $wallet->transactions_count }}</td>
+
+                    <td>
+                        <a href="javascript:void(0); document.getElementById('wallet-{{ $wallet->id }}-delete').requestSubmit();">Delete</a>
+                        <form onSubmit="return confirm('Do you want to delete this wallet?')"
+                              id="wallet-{{ $wallet->id }}-delete"
+                              action="/wallets/{{ $wallet->id }}/delete"
+                              method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </td>
 
                 </tr>
 

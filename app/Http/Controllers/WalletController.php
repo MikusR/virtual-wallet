@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\Wallet;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
@@ -47,5 +45,16 @@ class WalletController extends Controller
         return redirect('/wallets')->with('success', 'Wallet created');
     }
 
+    public function edit()
+    {
+    }
+
+    public function destroy(string $id)
+    {
+        $wallet = Wallet::findOrFail($id);
+        $wallet->delete();
+
+        return redirect('/wallets')->with('success', 'Wallet deleted');
+    }
 
 }
