@@ -29,7 +29,11 @@ Route::post('login', [SessionController::class, 'store'])->middleware('guest');
 Route::get('/wallets/create', [WalletController::class, 'create'])->middleware('auth');
 Route::post('/wallets/create', [WalletController::class, 'store'])->middleware('auth');
 Route::get('wallets', [WalletController::class, 'index'])->middleware('auth');
-Route::get('/wallets/{id}', [WalletController::class, 'show'])->middleware('auth')->where('id', '[0-9]+');
-Route::get('/wallets/{id}/edit', [WalletController::class, 'edit'])->middleware('auth');
+Route::get('/wallets/{id}', [WalletController::class, 'show'])
+     ->middleware('auth')
+     ->where('id', '[0-9]+')
+     ->name('transactions');
+Route::get('/wallets/{id}/edit', [WalletController::class, 'show'])->middleware('auth')->name('wallets.edit');
+Route::post('/wallets/{id}/update', [WalletController::class, 'update'])->middleware('auth');
 Route::post('/wallets/{id}/delete', [WalletController::class, 'destroy'])->middleware('auth');
 //Route::resource('transactions', TransactionController::class);

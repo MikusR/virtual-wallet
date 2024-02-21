@@ -45,8 +45,24 @@ class WalletController extends Controller
         return redirect('/wallets')->with('success', 'Wallet created');
     }
 
-    public function edit()
+    public function update(string $id)
     {
+        $wallet = Wallet::findOrFail($id);
+
+        if (request()->input('name') === Wallet::findOrFail($id)->name) {
+            return redirect(route('transactions', $wallet));
+        }
+        
+        $attributes = request()->validate([
+            'name' => [
+                'required', 'max:255', 'min:3', 'required',
+                Rule::unique('wallets')->where('user_id', Auth::user()->id),
+            ]
+        ]);
+
+        $wallet->update($attributes);
+
+        return redirect(route('transactions', $wallet))->with('success', 'Wallet renamed');
     }
 
     public function destroy(string $id)

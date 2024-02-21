@@ -1,5 +1,25 @@
 <x-layout>
     <section>
+
+
+        @if (request()->routeIs('wallets.edit'))
+            <div class="container">
+                <form method="post" action="/wallets/{{ $wallet->id }}/update">
+                    @csrf
+                    <label for="name">name:</label>
+                    <input type="text" name="name" id="name" required value="{{ old('name', $wallet->name) }}">
+                    @error('name')
+                    <p>{{ $message }}</p>
+                    @enderror
+                    <button type="submit">Rename</button>
+                </form>
+            </div>
+        @else
+            <div>
+                <h2>{{ $wallet->name }}</h2>
+            </div>
+        @endif
+
         <a href="/transactions/create">Create transaction</a>
         <table class="container">
             <thead>
@@ -27,7 +47,7 @@
                     @if ($transaction->type === 'out')
                         <td>Outgoing</td>
                     @endif
-                    
+
                     <td>{{ $transaction->is_fraudulent }}</td>
                     <td>{{ $transaction->created_at }}</td>
 
