@@ -26,7 +26,7 @@ class TransactionController extends Controller
         return view('transactions.create', ['wallet' => $wallet]);
     }
 
-    public function store()
+    public function store(): RedirectResponse
     {
         $attributes = Validator::make(request()->all(), [
             'from' => ['required', 'integer', 'exists:wallets,id', 'different:to'],
@@ -51,7 +51,6 @@ class TransactionController extends Controller
             'group_id' => $groupId
         ]);
         $to->save();
-
 
         return redirect(route('transactions', $from->wallet_id))->with('success', 'Transaction created');
     }

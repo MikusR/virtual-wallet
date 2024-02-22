@@ -3,20 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class RegisterController extends Controller
 {
-    public function create()
+    public function create(): View
     {
         return view('register.create');
     }
 
-    public function store()
+    public function store(): RedirectResponse
     {
-        $attributes             = request()->validate([
-            'name'     => ['required', 'max:255'],
-            'email'    => ['required', 'max:255', 'min:3', 'email', 'unique:users,email'],
+        $attributes = request()->validate([
+            'name' => ['required', 'max:255'],
+            'email' => ['required', 'max:255', 'min:3', 'email', 'unique:users,email'],
             'password' => ['required', 'max:255', 'min:3']
         ]);
         $attributes['password'] = bcrypt($attributes['password']);

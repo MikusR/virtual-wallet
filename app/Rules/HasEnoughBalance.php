@@ -33,7 +33,7 @@ class HasEnoughBalance implements Rule, DataAwareRule
     }
 
 
-    public function message()
+    public function message(): string
     {
         return 'Amount larger than balance!';
     }

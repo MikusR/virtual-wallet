@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Wallet;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Validator;
+use Illuminate\View\View;
 
 class WalletController extends Controller
 {
-    public function index()
+    public function index(): View
     {
         $wallets = Auth::user()->wallets()
             ->withCount(['transactions'])
@@ -18,23 +20,22 @@ class WalletController extends Controller
             ->latest()
             ->get();
 
-
         return view('wallets.index', ['wallets' => $wallets]);
     }
 
-    public function show(string $id)
+    public function show(string $id): View
     {
         $wallet = Wallet::with('transactions')->findOrFail($id);
-//        return $wallet;
+
         return view('wallets.transactions', ['wallet' => $wallet]);
     }
 
-    public function create()
+    public function create(): View
     {
         return view('wallets.create');
     }
 
-    public function store()
+    public function store(): RedirectResponse
     {
         $attributes = request()->validate([
             'name' => [
@@ -44,11 +45,10 @@ class WalletController extends Controller
         ]);
         request()->user()->wallets()->create($attributes);
 
-        //'unique:wallets,name,user_id,'.Auth::user()->id
         return redirect('/wallets')->with('success', 'Wallet created');
     }
 
-    public function update(string $id)
+    public function update(string $id): RedirectResponse
     {
         $wallet = Wallet::findOrFail($id);
 
@@ -68,9 +68,8 @@ class WalletController extends Controller
         return redirect(route('transactions', $wallet))->with('success', 'Wallet renamed');
     }
 
-    public function destroy(string $id)
+    public function destroy(string $id): RedirectResponse
     {
-
         $wallet = Wallet::findOrFail($id);
 
         $wallet->delete();
