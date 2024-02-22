@@ -17,8 +17,8 @@ class CreateTransactionsTable extends Migration
             $table->id();
             $table->integer('wallet_id');
             $table->integer('amount');
-            $table->string('type');//incoming/outgoing
-            $table->integer('group_id');
+            $table->string('type');//in/out
+            $table->integer('group_id')->nullable();
             $table->boolean('is_fraudulent')->default(false);
             $table->timestamps();
         });

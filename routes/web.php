@@ -31,26 +31,26 @@ Route::get('/wallets/create', [WalletController::class, 'create'])->middleware('
 Route::post('/wallets/create', [WalletController::class, 'store'])->middleware('auth');
 Route::get('wallets', [WalletController::class, 'index'])->middleware('auth');
 Route::get('/wallets/{id}', [WalletController::class, 'show'])
-     ->middleware('auth')
-     ->where('id', '[0-9]+')
-     ->name('transactions');
+    ->middleware('auth')
+    ->where('id', '[0-9]+')
+    ->name('transactions');
 Route::get('/wallets/{id}/edit', [WalletController::class, 'show'])->middleware('auth')->name('wallets.edit');
 Route::post('/wallets/{id}/update', [WalletController::class, 'update'])->middleware('auth');
 Route::post('/wallets/{id}/delete', [WalletController::class, 'destroy'])->middleware('auth');
 Route::post('/wallets/{wallet_id}/transactions/{group_id}/delete',
     [TransactionController::class, 'destroy'])->middleware('auth')
-     ->where('wallet_id', '[0-9]+');
+    ->where('wallet_id', '[0-9]+');
 Route::post('/wallets/{wallet_id}/transactions/{group_id}/mark-as-fraud',
     [TransactionController::class, 'mark'])->middleware('auth')
-     ->where('wallet_id', '[0-9]+');
+    ->where('wallet_id', '[0-9]+');
 Route::post('/wallets/{wallet_id}/transactions/create',
-    [TransactionController::class, 'create'])->middleware('auth')
-     ->where('wallet_id', '[0-9]+');
+    [TransactionController::class, 'store'])->middleware('auth')
+    ->where('wallet_id', '[0-9]+');
 
 Route::get('/wallets/{wallet_id}/transactions/create',
     [TransactionController::class, 'create'])->middleware('auth')
-     ->where('wallet_id', '[0-9]+');
+    ->where('wallet_id', '[0-9]+');
 
 Route::get('/wallets/{wallet_id}/transactions/{group_id}',
     [TransactionController::class, 'show'])->middleware('auth')
-     ->where('wallet_id', '[0-9]+');
+    ->where('wallet_id', '[0-9]+');

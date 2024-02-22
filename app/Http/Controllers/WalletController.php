@@ -3,23 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Wallet;
-use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use Validator;
 
 class WalletController extends Controller
 {
     public function index()
     {
         $wallets = Auth::user()->wallets()
-                       ->withCount(['transactions'])
-                       ->withSum('transactions', 'amount')
-                       ->latest()
-                       ->get();
+            ->withCount(['transactions'])
+            ->withSum('transactions', 'amount')
+            ->latest()
+            ->get();
 
-//        foreach ($wallets as $wallet) {
-//            $wallet->balance = $wallet->transactions()->sum('amount');
-//        }
 
         return view('wallets.index', ['wallets' => $wallets]);
     }
@@ -27,7 +25,7 @@ class WalletController extends Controller
     public function show(string $id)
     {
         $wallet = Wallet::with('transactions')->findOrFail($id);
-
+//        return $wallet;
         return view('wallets.transactions', ['wallet' => $wallet]);
     }
 
@@ -58,12 +56,12 @@ class WalletController extends Controller
             return redirect(route('transactions', $wallet));
         }
 
-        $attributes = request()->validate([
+        $attributes = Validator::make(request()->all(), [
             'name' => [
-                'required', 'max:255', 'min:3', 'required',
+                'max:255', 'min:3', 'required',
                 Rule::unique('wallets')->where('user_id', Auth::user()->id),
             ]
-        ]);
+        ])->validate();
 
         $wallet->update($attributes);
 

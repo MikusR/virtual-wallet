@@ -13,7 +13,10 @@ class Transaction extends Model
 
     protected $fillable = [
         'amount',
+        'type',
+        'wallet_id',
         'is_fraudulent',
+        'group_id'
     ];
 
     public function wallet(): BelongsTo
@@ -25,7 +28,7 @@ class Transaction extends Model
     {
         $secondaryWalletId = Transaction::where('group_id', $this->group_id)->Where('id', '!=',
             $this->id)->value('wallet_id');
-        $secondary         = Wallet::findOrFail($secondaryWalletId);
+        $secondary = Wallet::findOrFail($secondaryWalletId);
 
 
         return $secondary->name;
