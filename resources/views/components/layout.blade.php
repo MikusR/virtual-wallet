@@ -21,7 +21,6 @@
                 <li><a href="/register">Register</a></li>
             @endguest
             @auth
-                <li><a href="/profile">Profile</a></li>
                 <li><a href="javascript:void(0);"
                        onclick="document.getElementById('logout-form').submit();"
                        class="pico-color-red-600">
@@ -49,7 +48,7 @@
 
 </main>
 <footer class="container">
-    
+
 </footer>
 </body>
 </html>

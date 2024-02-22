@@ -1,6 +1,6 @@
 <x-layout>
     <section>
-        <a href="/wallets/create">Create</a>
+        <a href="/wallets/create">Create Wallet</a>
         <table class="container">
             <thead>
             <tr>
