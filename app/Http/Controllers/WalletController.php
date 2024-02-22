@@ -27,7 +27,6 @@ class WalletController extends Controller
     {
         $wallet = Wallet::with('transactions')->findOrFail($id);
 
-//        return $wallet;
         return view('wallets.transactions', ['wallet' => $wallet]);
     }
 

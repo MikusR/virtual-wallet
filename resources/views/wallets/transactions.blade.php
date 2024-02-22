@@ -20,7 +20,7 @@
             </div>
         @endif
 
-        <a href="/transactions/create">Create transaction</a>
+        <a href="/wallets/{{ $wallet->id }}/transactions/create">Create transaction</a>
         <table class="container">
             <thead>
             <tr>
@@ -53,17 +53,25 @@
                     @if ($transaction->is_fraudulent)
                         <td class="pico-color-red-600">fraudulent</td>
                     @else
-                        <td><a class="pico-color-green-600">mark as fraudulent</a></td>
+                        <td><a class="pico-color-green-600"
+                               href="javascript:void(0); document.getElementById('transaction-{{ $transaction->group_id }}-mark-as-fraud').requestSubmit();">mark
+                                as fraudulent</a></td>
                     @endif
 
                     <td>{{ $transaction->created_at }}</td>
-                    <td><a class="pico-color-red-600">Delete</a></td>
+                    <td><a class="pico-color-red-600"
+                           href="javascript:void(0); document.getElementById('transaction-{{ $transaction->group_id }}-delete').requestSubmit();">Delete</a>
+                    </td>
                     <form method="post" style="display: none;"
-                          action="/{{ $wallet->id }}/transactions/{{ $transaction->group_id }}/mark-as-fraud">
+                          onSubmit="return confirm('Do you want to mark this transaction as fraud?')"
+                          action="/wallets/{{ $wallet->id }}/transactions/{{ $transaction->group_id }}/mark-as-fraud"
+                          id="transaction-{{ $transaction->group_id }}-mark-as-fraud">
                         @csrf
                     </form>
                     <form method="post" style="display: none;"
-                          action="/{{ $wallet->id }}/transactions/{{ $transaction->group_id }}/delete">
+                          onSubmit="return confirm('Do you want to delete this transaction?')"
+                          action="/wallets/{{ $wallet->id }}/transactions/{{ $transaction->group_id }}/delete"
+                          id="transaction-{{ $transaction->group_id }}-delete">
                         @csrf
                     </form>
                 </tr>

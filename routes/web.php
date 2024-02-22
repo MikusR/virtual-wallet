@@ -46,6 +46,11 @@ Route::post('/wallets/{wallet_id}/transactions/{transaction_group_id}/mark-as-fr
 Route::post('/wallets/{wallet_id}/transactions/create',
     [TransactionController::class, 'create'])->middleware('auth')
      ->where('wallet_id', '[0-9]+');
+
+Route::get('/wallets/{wallet_id}/transactions/create',
+    [TransactionController::class, 'create'])->middleware('auth')
+     ->where('wallet_id', '[0-9]+');
+
 Route::get('/wallets/{wallet_id}/transactions/{transaction_group_id}',
     [TransactionController::class, 'show'])->middleware('auth')
      ->where('id', '[0-9]+');

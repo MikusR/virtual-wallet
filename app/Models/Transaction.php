@@ -11,6 +11,11 @@ class Transaction extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'amount',
+        'is_fraudulent',
+    ];
+
     public function wallet(): BelongsTo
     {
         return $this->belongsTo(Wallet::class);

@@ -18,7 +18,7 @@ class CreateTransactionsTable extends Migration
             $table->integer('wallet_id');
             $table->integer('amount');
             $table->string('type');//incoming/outgoing
-            $table->integer('group_id');//todo first outgoing->get id set here for both?
+            $table->integer('group_id');
             $table->boolean('is_fraudulent')->default(false);
             $table->timestamps();
         });
