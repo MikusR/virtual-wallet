@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class SessionController extends Controller
 {
-    public function create()
+    public function create(): View
     {
         return view('login');
     }
 
-    public function store()
+    public function store(): RedirectResponse
     {
         $attributes = request()->validate([
-            'email'    => ['required', 'max:255', 'min:3', 'email'],
+            'email' => ['required', 'max:255', 'min:3', 'email'],
             'password' => ['required', 'max:255', 'min:3']
         ]);
         if (auth()->attempt($attributes)) {
@@ -28,7 +29,7 @@ class SessionController extends Controller
             ->withErrors(['email' => 'Wrong credentials']);
     }
 
-    public function destroy()
+    public function destroy(): RedirectResponse
     {
         auth()->logout();
 

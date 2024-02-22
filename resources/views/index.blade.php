@@ -1,7 +1,7 @@
 <x-layout>
     <section class="container">
         <h2>
-            Hello
+            Welcome to Virtual Wallet. Please register or Log In.
         </h2>
 
     </section>
