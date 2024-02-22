@@ -69,7 +69,7 @@ class LoginTest extends TestCase
 
         $response->assertRedirect('/login');
         $response->assertSessionHasErrors('email');
-      
+
         $this->assertTrue(session()->hasOldInput('email'));
         $this->assertGuest();
     }
@@ -85,7 +85,8 @@ class LoginTest extends TestCase
             'password' => $password,
         ]);
 
-        $response->assertRedirect('/');
+        $response->assertRedirect('/wallets');
+        
         $this->assertAuthenticatedAs($user);
     }
 }
