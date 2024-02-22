@@ -38,17 +38,25 @@ class TransactionController extends Controller
         return redirect('/wallets')->with('success', 'Wallet created');
     }
 
-    public function destroy(string $id)
+    public function destroy(string $transaction_group_id)
     {
-        $transaction_group = Transaction::where('group_id', $id)->get();
+        return request()->all();
+
+        return $transaction_group_id;
+        $transaction_group = Transaction::where('group_id', $group_id)->get();
+
+        return $transaction_group;
         $transaction_group->map->delete();
 
         return back()->with('success', 'Transaction deleted');
     }
 
-    public function mark(string $id)
+    public function mark(Transaction $transaction)
     {
+        return $transaction;
         $transaction_group = Transaction::where('group_id', $id)->get();
+
+        return $transaction_group;
         $transaction_group->map->update(['is_fraudulent' => true]);
         $transaction_group->map->save();
 

@@ -72,6 +72,7 @@ class WalletController extends Controller
     public function destroy(string $id)
     {
         $wallet = Wallet::findOrFail($id);
+
         $wallet->delete();
 
         return redirect('/wallets')->with('success', 'Wallet deleted');
