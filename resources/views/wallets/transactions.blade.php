@@ -25,11 +25,13 @@
             <thead>
             <tr>
                 <th scope="col">group_id</th>
-                <th scope="col">amount</th>
-                <th scope="col">type</th>
-                <th scope="col">is_fraudulent</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Type</th>
+                <th scope="col">Fraud</th>
 
-                <th scope="col">created_at</th>
+
+                <th scope="col">Created</th>
+                <th scope="col">Delete</th>
 
             </tr>
             </thead>
@@ -38,19 +40,32 @@
 
             @foreach($wallet->transactions as $transaction)
                 <tr>
-                    <th scope="row"><a href="/transaction/{{ $transaction->group_id }}">{{ $transaction->group_id }}</a>
+                    <th scope="row"><a
+                            href="/wallets/{{ $wallet->id }}/transactions/{{ $transaction->group_id }}">{{ $transaction->group_id }}</a>
                     </th>
                     <td>{{ $transaction->amount }}</td>
                     @if ($transaction->type === 'in')
-                        <td>Incoming</td>
+                        <td>Incoming from {{ $transaction->secondary_wallet }}</td>
                     @endif
                     @if ($transaction->type === 'out')
-                        <td>Outgoing</td>
+                        <td>Sent to {{ $transaction->secondary_wallet }}</td>
+                    @endif
+                    @if ($transaction->is_fraudulent)
+                        <td class="pico-color-red-600">fraudulent</td>
+                    @else
+                        <td><a class="pico-color-green-600">mark as fraudulent</a></td>
                     @endif
 
-                    <td>{{ $transaction->is_fraudulent }}</td>
                     <td>{{ $transaction->created_at }}</td>
-
+                    <td><a class="pico-color-red-600">Delete</a></td>
+                    <form method="post" style="display: none;"
+                          action="/{{ $wallet->id }}/transactions/{{ $transaction->group_id }}/mark-as-fraud">
+                        @csrf
+                    </form>
+                    <form method="post" style="display: none;"
+                          action="/{{ $wallet->id }}/transactions/{{ $transaction->group_id }}/delete">
+                        @csrf
+                    </form>
                 </tr>
 
             @endforeach
