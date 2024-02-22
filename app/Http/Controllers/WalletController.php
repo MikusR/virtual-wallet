@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Wallet;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
@@ -71,6 +72,7 @@ class WalletController extends Controller
 
     public function destroy(string $id)
     {
+
         $wallet = Wallet::findOrFail($id);
 
         $wallet->delete();
