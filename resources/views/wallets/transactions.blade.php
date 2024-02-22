@@ -9,14 +9,14 @@
                     <label for="name">name:</label>
                     <input type="text" name="name" id="name" required value="{{ old('name', $wallet->name) }}">
                     @error('name')
-                    <p>{{ $message }}</p>
+                    <p class="pico-color-red-600">{{ $message }}</p>
                     @enderror
                     <button type="submit">Rename</button>
                 </form>
             </div>
         @else
             <div>
-                <h2>{{ $wallet->name }}</h2>
+                <h2><a href="/wallets/{{ $wallet->id }}/edit" data-tooltip="Rename">{{ $wallet->name }}</a></h2>
             </div>
         @endif
 
