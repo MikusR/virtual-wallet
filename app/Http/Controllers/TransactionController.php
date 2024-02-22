@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use App\Models\Wallet;
+use App\Rules\HasEnoughBalance;
 use Illuminate\Http\RedirectResponse;
 use Validator;
 use Illuminate\View\View;
@@ -30,16 +31,15 @@ class TransactionController extends Controller
         $attributes = Validator::make(request()->all(), [
             'from' => ['required', 'integer', 'exists:wallets,id', 'different:to'],
             'to' => ['required', 'integer', 'exists:wallets,id', 'different:from'],
-            'amount' => ['required', 'integer', 'gt:0'],
-        ])//->after()
-        ->validate();
-//        return $attributes['from'];
+            'amount' => ['required', 'integer', 'gt:0', new HasEnoughBalance()],
+        ])->validate();
+
         $from = Transaction::create([
             'wallet_id' => $attributes['from'],
             'amount' => -$attributes['amount'],
             'type' => 'out',
         ]);
-//        dd($from);
+
         $groupId = $from->id;
         $from->group_id = $groupId;
         $from->save();
