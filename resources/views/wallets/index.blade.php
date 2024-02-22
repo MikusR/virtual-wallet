@@ -16,7 +16,7 @@
             @foreach($wallets as $wallet)
                 <tr>
                     <th scope="row"><a href="/wallets/{{ $wallet->id }}">{{ $wallet->name }}</a></th>
-                    <td>{{ $wallet->balance }}</td>
+                    <td>{{ $wallet->transactions()->sum('amount') }}</td>
                     <td>{{ $wallet->transactions_count }}</td>
 
                     <td>
