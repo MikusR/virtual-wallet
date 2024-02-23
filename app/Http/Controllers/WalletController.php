@@ -15,7 +15,9 @@ class WalletController extends Controller
     public function index(): View
     {
         $wallets = Auth::user()->wallets()
-            ->withCount(['transactions'])
+            ->withCount(['transactions', 'transactions as transactions_count' => function ($query) {
+                $query->where('type', '!=', 'seed');
+            }])
             ->withSum('transactions', 'amount')
             ->latest()
             ->get();
@@ -43,8 +45,8 @@ class WalletController extends Controller
                 Rule::unique('wallets')->where('user_id', Auth::user()->id),
             ]
         ]);
-        request()->user()->wallets()->create($attributes);
-
+        $wallet = request()->user()->wallets()->create($attributes);
+        $wallet->transactions()->create(['amount' => 100, 'type' => 'seed', 'group_id' => $wallet->id]);
         return redirect('/wallets')->with('success', 'Wallet created');
     }
 

@@ -29,7 +29,7 @@
         <a href="/wallets/{{ $wallet->id }}/transactions/create">Create transaction</a>
         <hr>
 
-        @if($wallet->transactions()->count() === 0)
+        @if($wallet->transactions()->count() <= 1)
             <h2 class="pico-color-red">No transactions</h2>
         @else
 
@@ -50,40 +50,42 @@
 
 
                 @foreach($wallet->transactions as $transaction)
-                    <tr>
-                        <td>{{ $transaction->amount }}</td>
-                        @if ($transaction->type === 'in')
-                            <td>Incoming from {{ $transaction->secondary_wallet }}</td>
-                        @endif
-                        @if ($transaction->type === 'out')
-                            <td>Sent to {{ $transaction->secondary_wallet }}</td>
-                        @endif
-                        @if ($transaction->is_fraudulent)
-                            <td class="pico-color-red-600">fraudulent</td>
-                        @else
-                            <td><a class="pico-color-green-600"
-                                   href="javascript:void(0); document.getElementById('transaction-{{ $transaction->group_id }}-mark-as-fraud').requestSubmit();">mark
-                                    as fraudulent</a></td>
-                        @endif
+                    @if($transaction->type === 'seed')
+                    @else
+                        <tr>
+                            <td>{{ $transaction->amount }}</td>
+                            @if ($transaction->type === 'in')
+                                <td>Incoming from {{ $transaction->secondary_wallet }}</td>
+                            @endif
+                            @if ($transaction->type === 'out')
+                                <td>Sent to {{ $transaction->secondary_wallet }}</td>
+                            @endif
+                            @if ($transaction->is_fraudulent)
+                                <td class="pico-color-red-600">fraudulent</td>
+                            @else
+                                <td><a class="pico-color-green-600"
+                                       href="javascript:void(0); document.getElementById('transaction-{{ $transaction->group_id }}-mark-as-fraud').requestSubmit();">mark
+                                        as fraudulent</a></td>
+                            @endif
 
-                        <td>{{ $transaction->created_at }}</td>
-                        <td><a class="pico-color-red-600"
-                               href="javascript:void(0); document.getElementById('transaction-{{ $transaction->group_id }}-delete').requestSubmit();">Delete</a>
-                        </td>
-                        <form method="post" style="display: none;"
-                              onSubmit="return confirm('Do you want to mark this transaction as fraud?')"
-                              action="/wallets/{{ $wallet->id }}/transactions/{{ $transaction->group_id }}/mark-as-fraud"
-                              id="transaction-{{ $transaction->group_id }}-mark-as-fraud">
-                            @csrf
-                        </form>
-                        <form method="post" style="display: none;"
-                              onSubmit="return confirm('Do you want to delete this transaction?')"
-                              action="/wallets/{{ $wallet->id }}/transactions/{{ $transaction->group_id }}/delete"
-                              id="transaction-{{ $transaction->group_id }}-delete">
-                            @csrf
-                        </form>
-                    </tr>
-
+                            <td>{{ $transaction->created_at }}</td>
+                            <td><a class="pico-color-red-600"
+                                   href="javascript:void(0); document.getElementById('transaction-{{ $transaction->group_id }}-delete').requestSubmit();">Delete</a>
+                            </td>
+                            <form method="post" style="display: none;"
+                                  onSubmit="return confirm('Do you want to mark this transaction as fraud?')"
+                                  action="/wallets/{{ $wallet->id }}/transactions/{{ $transaction->group_id }}/mark-as-fraud"
+                                  id="transaction-{{ $transaction->group_id }}-mark-as-fraud">
+                                @csrf
+                            </form>
+                            <form method="post" style="display: none;"
+                                  onSubmit="return confirm('Do you want to delete this transaction?')"
+                                  action="/wallets/{{ $wallet->id }}/transactions/{{ $transaction->group_id }}/delete"
+                                  id="transaction-{{ $transaction->group_id }}-delete">
+                                @csrf
+                            </form>
+                        </tr>
+                    @endif
                 @endforeach
                 </tbody>
             </table>

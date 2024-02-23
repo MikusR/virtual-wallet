@@ -27,6 +27,9 @@ class Transaction extends Model
     {
         $secondaryWalletId = Transaction::where('group_id', $this->group_id)->Where('id', '!=',
             $this->id)->value('wallet_id');
+        if ($secondaryWalletId === null) {
+            return 'none';
+        }
         $secondary = Wallet::findOrFail($secondaryWalletId);
 
         return $secondary->name;

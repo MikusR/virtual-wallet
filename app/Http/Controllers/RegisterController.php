@@ -26,6 +26,6 @@ class RegisterController extends Controller
 
         auth()->login($user);
 
-        return redirect('/')->with('success', "Account {$attributes['name']} has been created");
+        return redirect('/wallets')->with('success', "Account {$attributes['name']} has been created");
     }
 }
