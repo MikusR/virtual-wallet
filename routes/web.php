@@ -17,8 +17,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function () {
-    return view('index');
+    if (Auth::check()) {
+        return redirect('/wallets');
+    } else {
+        return view('index');
+    }
 });
 Route::get('register', [RegisterController::class, 'create'])->middleware('guest');
 Route::post('register', [RegisterController::class, 'store'])->middleware('guest');
