@@ -32,6 +32,8 @@ class TransactionController extends Controller
             'from' => ['required', 'integer', 'exists:wallets,id', 'different:to'],
             'to' => ['required', 'integer', 'exists:wallets,id', 'different:from'],
             'amount' => ['required', 'integer', 'gt:0', new HasEnoughBalance()],
+        ], $messages = [
+            'different' => "Can't send inside same wallet!",
         ])->validate();
 
         $from = Transaction::create([
