@@ -48,9 +48,9 @@ Route::post('/wallets/{wallet_id}/transactions/{group_id}/delete',
 Route::post('/wallets/{wallet_id}/transactions/{group_id}/mark-as-fraud',
     [TransactionController::class, 'mark'])->middleware('auth')
     ->where('wallet_id', '[0-9]+');
-Route::post('/wallets/{wallet_id}/transactions/create',
+Route::post('/{user_id}/wallets/transactions/create',
     [TransactionController::class, 'store'])->middleware('auth')
-    ->where('wallet_id', '[0-9]+');
+    ->where('user_id', '[0-9]+');
 
 Route::get('/wallets/{wallet_id}/transactions/create',
     [TransactionController::class, 'create'])->middleware('auth')

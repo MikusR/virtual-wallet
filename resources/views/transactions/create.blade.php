@@ -1,10 +1,14 @@
 <x-layout>
     <section>
         <div class="container">
-            <form method="post" action="/wallets/{{ $wallet->id }}/transactions/create">
+            <form method="post" action="/{{ Auth::user()->id }}/wallets/transactions/create">
                 @csrf
                 <label for="from">From:</label>
-                <input type="text" name="from" id="from" required value="{{ old('from', $wallet->id) }}">
+                <select name="from" id="from" required>
+                    @foreach ($wallets as $wallet)
+                        <option value="{{ $wallet->id }}">{{ $wallet->name }} (Balance: {{ $wallet->balance }})</option>
+                    @endforeach
+                </select>
                 @error('from')
                 <p>{{ $message }}</p>
                 @enderror
