@@ -20,7 +20,6 @@ class WalletController extends Controller
             ->withSum('transactions', 'amount')
             ->latest()
             ->get();
-
         return view('wallets.index', ['wallets' => $wallets]);
     }
 

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
-use App\Models\Wallet;
 use App\Rules\HasEnoughBalance;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 use Illuminate\View\View;
 
@@ -21,9 +21,10 @@ class TransactionController extends Controller
 
     public function create(string $id): View
     {
-        $wallet = Wallet::findOrFail($id);
-
-        return view('transactions.create', ['wallet' => $wallet]);
+        $wallets = Auth::user()->wallets()->get()->filter(function ($wallet) {
+            return $wallet->balance > 0;
+        });
+        return view('transactions.create', ['wallets' => $wallets, 'wallet_id' => $id]);
     }
 
     public function store(): RedirectResponse
