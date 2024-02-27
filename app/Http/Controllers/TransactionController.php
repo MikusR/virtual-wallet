@@ -24,7 +24,7 @@ class TransactionController extends Controller
         $wallets = Auth::user()->wallets()->get()->filter(function ($wallet) {
             return $wallet->balance > 0;
         });
-        return view('transactions.create', ['wallets' => $wallets]);
+        return view('transactions.create', ['wallets' => $wallets, 'wallet_id' => $id]);
     }
 
     public function store(): RedirectResponse
