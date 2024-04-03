@@ -40,7 +40,7 @@ touch database/database.sqlite
 make fresh database (auto creates seed wallet)
 
 ```bash
-php artisan make:fresh
+php artisan migrate:fresh
 ```
 
 run
